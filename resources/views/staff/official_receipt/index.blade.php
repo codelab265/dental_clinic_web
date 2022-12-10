@@ -24,10 +24,9 @@
                                 <tr>
                                     <th class="border-bottom-0">Patient</th>
                                     <th class="border-bottom-0">Invoice Number</th>
-                                    <th class="border-bottom-0">OR number</th>
+                                    <th class="border-bottom-0">Number of ORs</th>
                                     <th class="border-bottom-0">Amount Paid</th>
                                     <th class="border-bottom-0">Balance</th>
-                                    <th class="border-bottom-0">Paid Date</th>
                                     <th class="border-bottom-0">action</th>
                                 </tr>
                             </thead>
@@ -35,52 +34,31 @@
                                 @php
                                     $page = 'officialReceipts';
                                 @endphp
-                                @foreach ($officialReceipts as $officialReceipt)
+                                @foreach ($invoices as $invoice)
                                     @php
-                                        $id = $officialReceipt->id;
-                                        $deduct = $officialReceipt->amount_paid + $officialReceipt->paid_already;
+                                        $id = $invoice->id;
+                                        
                                     @endphp
                                     <tr>
-                                        <td>{{ $officialReceipt->invoice->patient->name }}</td>
-                                        <td>{{ $officialReceipt->invoice->invoice_number }}</td>
-                                        <td>{{ $officialReceipt->OR_number }}</td>
+                                        <td>{{ $invoice->patient->name }}</td>
+                                        <td>{{ $invoice->invoice_number }}</td>
+                                        <td>{{ $invoice->official_receipt->count() }}</td>
 
-                                        <td>₱{{ number_format($officialReceipt->amount_paid, 2) }}
+                                        <td>₱{{ number_format($invoice->official_receipt->sum('amount_paid'), 2) }}
                                         </td>
-                                        <td>₱{{ number_format($officialReceipt->invoice->invoice_detail->sum('amount') - $deduct, 2) }}
+                                        <td>₱{{ number_format($invoice->invoice_detail->sum('amount') - $invoice->official_receipt->sum('amount_paid'), 2) }}
                                         </td>
-                                        <td>{{ date('d-F-Y', strtotime($officialReceipt->created_at)) }}</td>
 
                                         <td>
                                             <div class="btn-group">
 
                                                 <div class="btn-group">
-                                                    {{-- @if ($officialReceipt->sent_status == 0)
-                                                        <a class="btn btn-primary btn-sm"
-                                                            href="{{ route('staff.official-receipts.update', ['official_receipt' => $id]) }}">Send
-                                                        </a>
-                                                    @else
-                                                        <a class="btn btn-success btn-sm disable" aria-readonly="true">Sent
-                                                        </a>
-                                                    @endif --}}
+
                                                     <a name="" id="" class="btn btn-info btn-sm"
-                                                        href="{{ route('staff.official-receipts.show', $id) }}"
+                                                        href="{{ route('staff.official-receipts.view', $id) }}"
                                                         role="button">
                                                         <i class="fa fa-eye"></i>
-
-                                                    </a>
-
-                                                    {{-- <a name="" id="" class="btn btn-warning btn-sm"
-                                                        data-bs-toggle="modal" href="#edit{{ $id }}"
-                                                        role="button">
-                                                        <i class="fa fa-edit"></i>
-
-                                                    </a> --}}
-
-                                                    <a name="" id="" class="btn btn-danger btn-sm"
-                                                        data-bs-toggle="modal" href="#delete{{ $id }}"
-                                                        role="button">
-                                                        <i class="fa fa-trash"></i>
+                                                        View ORs
 
                                                     </a>
 
@@ -90,7 +68,6 @@
 
                                     </tr>
                                     @include('delete')
-                                    @include('staff.official_receipt.edit')
                                 @endforeach
 
                             </tbody>

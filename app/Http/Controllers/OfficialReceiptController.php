@@ -105,8 +105,11 @@ class OfficialReceiptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function view($id)
     {
-        //
+        $invoice = Invoice::find($id);
+        $officialReceipts = $invoice->official_receipt;
+
+        return view('staff.official_receipt.view', compact('invoice', 'officialReceipts'));
     }
 }

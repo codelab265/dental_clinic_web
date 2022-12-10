@@ -95,6 +95,7 @@ Route::group(['prefix' => 'staff', 'as' => 'staff.', 'middleware' => 'auth'], fu
     Route::get('invoice/update/{id}', [StaffInvoiceController::class, 'updateStatus'])->name('invoice.update');
     Route::resource('transactions', StaffTransactionController::class);
     Route::resource('official-receipts', OfficialReceiptController::class);
+    Route::get('official-receipt/{id}', [OfficialReceiptController::class, 'view'])->name('official-receipts.view');
 });
 
 Route::delete('delete', [DeleteController::class, 'delete'])->name('delete');
