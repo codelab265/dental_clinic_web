@@ -16,20 +16,17 @@ class OfficialReceiptController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role==4) {
+        if (Auth::user()->role == 4) {
 
-            $officialReceipts = OfficialReceipt::WhereIn('invoice_id', function($query){
+            $officialReceipts = OfficialReceipt::WhereIn('invoice_id', function ($query) {
                 $query->select('id')->where('patient_id', Auth::id())->from('invoices');
-
             })->get();
-
-            
         } else {
-            
+
             $officialReceipts = OfficialReceipt::all();
         }
-        
-        
+
+
         $invoices = Invoice::all();
 
         return view('staff.official_receipt.index', compact('officialReceipts', 'invoices'));
@@ -53,9 +50,11 @@ class OfficialReceiptController extends Controller
      */
     public function store(Request $request)
     {
+        $paid_already = OfficialReceipt::where('invoice_id', $request->invoice_id)->sum('amount_paid');
         $OR = new OfficialReceipt();
         $OR->invoice_id = $request->invoice_id;
-        $OR->OR_number = "#OR".rand(10000, 100000);
+        $OR->OR_number = "#OR" . rand(10000, 100000);
+        $OR->paid_already = $paid_already;
         $OR->amount_paid = $request->amount_paid;
         $OR->save();
 
@@ -73,7 +72,7 @@ class OfficialReceiptController extends Controller
         $officialReceipt = OfficialReceipt::find($id);
         $invoice = Invoice::find($officialReceipt->invoice_id);
 
-        return view('staff.official_receipt.receipt', compact('officialReceipt','invoice'));
+        return view('staff.official_receipt.receipt', compact('officialReceipt', 'invoice'));
     }
 
     /**

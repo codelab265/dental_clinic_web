@@ -38,6 +38,7 @@
                                 @foreach ($officialReceipts as $officialReceipt)
                                     @php
                                         $id = $officialReceipt->id;
+                                        $deduct = $officialReceipt->amount_paid + $officialReceipt->paid_already;
                                     @endphp
                                     <tr>
                                         <td>{{ $officialReceipt->invoice->patient->name }}</td>
@@ -46,7 +47,7 @@
 
                                         <td>₱{{ number_format($officialReceipt->amount_paid, 2) }}
                                         </td>
-                                        <td>₱{{ number_format($officialReceipt->invoice->invoice_detail->sum('amount') - $officialReceipt->amount_paid, 2) }}
+                                        <td>₱{{ number_format($officialReceipt->invoice->invoice_detail->sum('amount') - $deduct, 2) }}
                                         </td>
                                         <td>{{ date('d-F-Y', strtotime($officialReceipt->created_at)) }}</td>
 
@@ -69,12 +70,12 @@
 
                                                     </a>
 
-                                                    <a name="" id="" class="btn btn-warning btn-sm"
+                                                    {{-- <a name="" id="" class="btn btn-warning btn-sm"
                                                         data-bs-toggle="modal" href="#edit{{ $id }}"
                                                         role="button">
                                                         <i class="fa fa-edit"></i>
 
-                                                    </a>
+                                                    </a> --}}
 
                                                     <a name="" id="" class="btn btn-danger btn-sm"
                                                         data-bs-toggle="modal" href="#delete{{ $id }}"

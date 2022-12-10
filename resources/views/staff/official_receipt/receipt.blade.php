@@ -13,8 +13,7 @@
                             <i class="fa fa-arrow-circle-left me-2"></i>
                             Back
                         </a> --}}
-                        <a onclick="Print()" class=" btn btn-secondary float-end" style="margin-right: 10px"
-                            href="#">
+                        <a onclick="Print()" class=" btn btn-secondary float-end" style="margin-right: 10px" href="#">
                             <i class="fa fa-print me-2"></i>
                             Print
                         </a>
@@ -46,13 +45,12 @@
                                 </small>
                             </p>
                             <p>
-                                <small class="text-success text-bold">Paid Date: {{ date('d-F-Y', strtotime($officialReceipt->created_at)) }}</small>
+                                <small class="text-success text-bold">Paid Date:
+                                    {{ date('d-F-Y', strtotime($officialReceipt->created_at)) }}</small>
                             </p>
                         </div>
                     </div>
                     <hr>
-
-
 
                     <div class="table-responsive">
                         <table class="table table-bordered text-nowrap key-buttons border-bottom">
@@ -100,10 +98,10 @@
                                         Balance
                                     </th>
                                     <td>
-                                        ₱{{ number_format($total-$officialReceipt->amount_paid, 2) }}
+                                        ₱{{ number_format($total - ($officialReceipt->amount_paid + $officialReceipt->paid_already), 2) }}
                                     </td>
                                 </tr>
-                                
+
                             </tbody>
 
                         </table>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Invoice;
 use App\Models\MedicalRecord;
+use App\Models\OfficialReceipt;
 use App\Models\Schedule;
 use App\Models\Service;
 use App\Models\Transaction;
@@ -31,6 +32,8 @@ class DeleteController extends Controller
             Invoice::find($id)->delete();
         } elseif ($page == "transactions") {
             Transaction::find($id)->delete();
+        } elseif ($page == "officialReceipts") {
+            OfficialReceipt::find($id)->delete();
         } else {
             return back();
         }
