@@ -22,7 +22,9 @@
                         <table id="responsive-datatable" class="table table-bordered text-nowrap key-buttons border-bottom">
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0">Patient</th>
+                                    @if (Auth()->user()->role != 4)
+                                        <th class="border-bottom-0">Patient</th>
+                                    @endif
                                     <th class="border-bottom-0">Invoice Number</th>
                                     <th class="border-bottom-0">Number of ORs</th>
                                     <th class="border-bottom-0">Amount Paid</th>
@@ -40,7 +42,9 @@
                                         
                                     @endphp
                                     <tr>
-                                        <td>{{ $invoice->patient->name }}</td>
+                                        @if (Auth()->user()->role != 4)
+                                            <td>{{ $invoice->patient->name }}</td>
+                                        @endif
                                         <td>{{ $invoice->invoice_number }}</td>
                                         <td>{{ $invoice->official_receipt->count() }}</td>
 
@@ -54,13 +58,24 @@
 
                                                 <div class="btn-group">
 
-                                                    <a name="" id="" class="btn btn-info btn-sm"
-                                                        href="{{ route('staff.official-receipts.view', $id) }}"
-                                                        role="button">
-                                                        <i class="fa fa-eye"></i>
-                                                        View ORs
+                                                    @if (Auth()->user()->role == 4)
+                                                        <a name="" id="" class="btn btn-info btn-sm"
+                                                            href="{{ route('patients.official-receipts.view', $id) }}"
+                                                            role="button">
+                                                            <i class="fa fa-eye"></i>
+                                                            View ORs
 
-                                                    </a>
+                                                        </a>
+                                                    @elseif (Auth()->user()->role == 3)
+                                                        <a name="" id="" class="btn btn-info btn-sm"
+                                                            href="{{ route('staff.official-receipts.view', $id) }}"
+                                                            role="button">
+                                                            <i class="fa fa-eye"></i>
+                                                            View ORs
+
+                                                        </a>
+                                                    @else
+                                                    @endif
 
                                                 </div>
                                             </div>

@@ -11,11 +11,21 @@
                         {{ $invoice->patient->name }} | {{ $invoice->invoice_number }}
                     </div>
                     <div class="col-md-2">
-                        <a name="" id="" class="btn btn-danger btn-sm"
-                            href="{{ route('staff.official-receipts.index') }}" role="button">
-                            <i class="fa fa-arrow-left"></i>
-                            Back
-                        </a>
+                        @if (Auth()->user()->role == 4)
+                            <a name="" id="" class="btn btn-danger btn-sm"
+                                href="{{ route('patients.official-receipts.index') }}" role="button">
+                                <i class="fa fa-arrow-left"></i>
+                                Back
+                            </a>
+                        @elseif (Auth()->user()->role == 3)
+                            <a name="" id="" class="btn btn-danger btn-sm"
+                                href="{{ route('staff.official-receipts.index') }}" role="button">
+                                <i class="fa fa-arrow-left"></i>
+                                Back
+                            </a>
+                        @else
+                        @endif
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -40,8 +50,7 @@
                                         $deduct = $officialReceipt->amount_paid + $officialReceipt->paid_already;
                                     @endphp
                                     <tr>
-                                        <td>{{ $officialReceipt->invoice->patient->name }}</td>
-                                        <td>{{ $officialReceipt->invoice->invoice_number }}</td>
+
                                         <td>{{ $officialReceipt->OR_number }}</td>
 
                                         <td>₱{{ number_format($officialReceipt->amount_paid, 2) }}

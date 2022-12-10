@@ -119,6 +119,12 @@
                                                     </p>
                                                 </div>
 
+                                                <div class="text-center pt-3">
+                                                    <p class="text-dark mb-0">Want to download mobile app?
+                                                        <a href="#" class="text-primary ms-1"
+                                                            onclick="alert('File not uploaded yet')">Click here</a>
+                                                    </p>
+                                                </div>
 
                                             </div>
 

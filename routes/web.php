@@ -82,6 +82,7 @@ Route::group(['prefix' => 'patients', 'as' => 'patients.', 'middleware' => 'auth
     Route::resource('invoices', PatientInvoiceController::class);
     Route::get('transactions', [PatientTransactionController::class, 'index'])->name('transactions');
     Route::resource('official-receipts', OfficialReceiptController::class);
+    Route::get('official-receipt/{id}', [OfficialReceiptController::class, 'view'])->name('official-receipts.view');
 });
 
 Route::group(['prefix' => 'staff', 'as' => 'staff.', 'middleware' => 'auth'], function () {
