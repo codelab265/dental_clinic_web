@@ -57,7 +57,30 @@ class ApiAppointmentController extends Controller
 
     public function time(Request $request)
     {
-        $data = DentistSchedule::where('dayOfWeek', $request->dow)->get();
+        $now = Carbon::now();
+        $appointments = Appointment::where('status', '!=', 2)->whereBetween('created_at', [
+            $now->startOfWeek(Carbon::SUNDAY)->format('Y-m-d'),
+            $now->endOfWeek(Carbon::SATURDAY)->format('Y-m-d'),
+        ])->get();
+        $data = [];
+        $dentist_schedules = DentistSchedule::where('dayOfWeek', $request->dow)->get();
+
+        foreach ($dentist_schedules as $dentist_schedule) {
+            if ($appointments->where('dentist_schedule_id', $dentist_schedule->id)->count() == 0) {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+
+            $data[] = [
+                'id' => $dentist_schedule->id,
+                'start' => $dentist_schedule->startTime,
+                'end' => $dentist_schedule->endTime,
+                'status' => $status
+            ];
+        }
+
+
         return response()->json($data);
     }
 }
