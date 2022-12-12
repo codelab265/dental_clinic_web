@@ -23,6 +23,6 @@ class Appointment extends Model
 
     public function dentist_schedule()
     {
-        return $this->belongsTo(DentistSchedule::class);
+        return $this->belongsTo(DentistSchedule::class)->with('dentist');
     }
 }

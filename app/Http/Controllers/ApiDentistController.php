@@ -9,7 +9,7 @@ class ApiDentistController extends Controller
 {
     public function index()
     {
-        $data = User::where('role', 2)->get();
+        $data = User::where('role', 2)->with('dentist_schedule')->get();
         return response()->json($data);
     }
 }

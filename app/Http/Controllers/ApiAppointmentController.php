@@ -13,7 +13,7 @@ class ApiAppointmentController extends Controller
     public function Index(Request $request)
     {
         $id = $request->id;
-        $data = Appointment::where('patient_id', $id)->get();
+        $data = Appointment::where('patient_id', $id)->with('dentist_schedule', 'service')->get();
 
         return response()->json($data);
     }
