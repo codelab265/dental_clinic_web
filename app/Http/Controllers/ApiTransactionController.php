@@ -12,7 +12,7 @@ class ApiTransactionController extends Controller
     {
 
 
-        $transactions = Transaction::where('patient_id', $request->id)->with('medicalRecord', 'invoice')->get();
+        $transactions = Transaction::where('patient_id', $request->id)->with('medicalRecord', 'invoice', 'officialReceipt')->get();
 
 
         return response()->json($transactions);

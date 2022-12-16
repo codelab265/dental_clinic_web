@@ -9,6 +9,7 @@ use App\Http\Controllers\ApiServiceController;
 use App\Http\Controllers\ApiRegisterController;
 use App\Http\Controllers\ApiScheduleController;
 use App\Http\Controllers\ApiAppointmentController;
+use App\Http\Controllers\ApiOfficialReceiptController;
 use App\Http\Controllers\ApiTransactionController;
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,5 @@ Route::get('transactions', [ApiTransactionController::class, 'index']);
 Route::get('schedules', [ApiScheduleController::class, 'index']);
 Route::get('invoices', [ApiInvoiceController::class, 'index']);
 Route::get('invoice/details', [ApiInvoiceController::class, 'details']);
+
+Route::get('official_receipt', [ApiOfficialReceiptController::class, 'index']);

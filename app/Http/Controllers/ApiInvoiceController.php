@@ -10,7 +10,7 @@ class ApiInvoiceController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Invoice::where('patient_id', $request->id)->where('sent_status', 1)->with('invoice_detail')->get();
+        $data = Invoice::where('patient_id', $request->id)->where('sent_status', 1)->with('invoice_detail', 'official_receipt')->get();
         return response()->json($data);
     }
 

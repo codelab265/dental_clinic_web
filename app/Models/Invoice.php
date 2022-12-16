@@ -13,7 +13,7 @@ class Invoice extends Model
 
     public function invoice_detail()
     {
-        return $this->hasMany(InvoiceDetail::class, 'invoice_id');
+        return $this->hasMany(InvoiceDetail::class, 'invoice_id')->with('service');
     }
 
     public function patient()
